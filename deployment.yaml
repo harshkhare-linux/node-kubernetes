@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-sample-image
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: harshkhare-node-latest
+  template:
+    metadata:
+      labels:
+        app: harshkhare-node-latest
+    spec:
+      containers:
+      - name: nodejs-sample-image
+        image: harshkhare/node:latest
+        ports:
+        - containerPort: 3000
