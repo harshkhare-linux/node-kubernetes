@@ -37,6 +37,7 @@ jobs:
       run: |
         echo Build completed on $(date)
         echo Pushing the Docker image to ECR Repository
+        docker image ls
         docker push 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:$TAG
        # docker tag my_image:latest ${ECR_URL}/my_image:latest
 
