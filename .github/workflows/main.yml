@@ -55,6 +55,8 @@ jobs:
 
     - name: Inject tag into deployment manifest
       run: sed -i "s#\${TAG}#$(echo refs/heads/main)#g" deployment.yaml
+    - name: check file
+      run: cat deployment.yaml
  
       #sed -i "s/\${TAG}/$(echo ${{ steps.get_tag.outputs.tag }})/g" deployment.yaml
 
