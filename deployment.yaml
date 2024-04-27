@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nodejs-sample-image
-        image: $REPOSITORY_URI:$TAG
+        image: 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:$TAG
         imagePullPolicy: Always
         env:
         - name: IMAGE_TAG
