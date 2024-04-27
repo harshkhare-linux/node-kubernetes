@@ -47,6 +47,7 @@ jobs:
       run: |
         echo Update Kube Config
         aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
+        kubectl delete configmap image-tag-config
         
     - name: Retrieve ECR Tag
       run: |
