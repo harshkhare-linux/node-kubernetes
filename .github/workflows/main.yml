@@ -31,7 +31,8 @@ jobs:
         TAG=${COMMIT_HASH:-latest}
         echo $TAG
         echo ${{ secrets.CONTAINER_NAME }}
-        docker build --tag ${{ secrets.REPOSITORY_URI }}:$TAG .
+        docker build -t sampleapp:latest .        
+        docker tag sampleapp:latest 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:$TAG
 
     - name: Push Docker image to ECR
       run: |
