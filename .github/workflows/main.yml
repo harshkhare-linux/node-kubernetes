@@ -32,8 +32,8 @@ jobs:
         echo $TAG
         echo ${{ secrets.CONTAINER_NAME }}
         docker build -t sampleapp:latest .        
-        docker tag sampleapp:latest 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:latest
-        docker push 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:latest
+        docker tag sampleapp:latest 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:$TAG
+        docker push 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:$TAG
 
 
     - name: Set AWS credentials for kubectl
@@ -53,6 +53,7 @@ jobs:
     - name: Apply changes to Kubernetes manifests
       run: |
         echo Apply changes to kube manifests
+        sed -i "s/\${TAG}/$(echo $TAG)/g" deployment.yaml
         kubectl apply -f deployment.yaml
         echo Completed applying changes to Kubernetes Objects
 
