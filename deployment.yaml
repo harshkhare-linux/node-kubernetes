@@ -20,8 +20,8 @@ spec:
         - name: IMAGE_TAG
           valueFrom:
             configMapKeyRef:
-              name: my-app-config
-              key: image-tag
+              name: image-tag-config
+              key: TAG
         ports:
         - containerPort: 3000
       imagePullSecrets:
