@@ -49,10 +49,10 @@ jobs:
         aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
         #kubectl delete configmap image-tag-config
         
-    - name: Get Git tag
-      id: get_tag
-      run: echo "::set-output name=tag::$(echo ${GITHUB_REF#refs/tags/})"
 
+    - name: Inject tag into deployment manifest
+      run: echo "Value of TAG:$TAG"
+      
     - name: Inject tag into deployment manifest
       run: sed -i "s#\${TAG}#$TAG#g" deployment.yaml
     - name: check file
