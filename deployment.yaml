@@ -31,5 +31,13 @@ spec:
               key: TAG
         ports:
         - containerPort: 3000
+        volumeMounts:
+        - name: my-volume
+          mountPath: /data  # Mount path in the container
+          
       imagePullSecrets:
       - name: dockerhub-secret
+      volumes:
+      - name: my-volume
+        persistentVolumeClaim:
+          claimName: my-pvc  # Reference to the PVC
