@@ -47,12 +47,25 @@ jobs:
       run: |
         echo Update Kube Config
         aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
+        
+    - name: Retrieve ECR Tag
+      run: |
+        TAG=$(aws ecr describe-images --repository-name rest-api --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text)
+        echo "Tag: $TAG"
+        echo "::set-output name=tag::$TAG"
+
+    - name: Create ConfigMap
+      run: |
+        kubectl create configmap image-tag-config --from-literal=TAG=$TAG
+
 
     - name: Apply changes to Kubernetes manifests
       run: |
         echo Apply changes to kube manifests
         kubectl apply -f deployment.yaml
         echo Completed applying changes to Kubernetes Objects
+      env:
+        TAG: ${{ steps.retrieve_tag.outputs.tag }}
 
     - name: Create artifacts
       run: |
