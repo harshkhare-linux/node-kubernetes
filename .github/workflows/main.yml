@@ -30,6 +30,8 @@ jobs:
         COMMIT_HASH=$(echo ${{ github.sha }} | cut -c 1-7)
         TAG=${COMMIT_HASH:-latest}
         echo $TAG
+        sed -i "s#\${TAG}#$TAG#g" deployment.yaml
+        cat deployment.yaml
         echo ${{ secrets.CONTAINER_NAME }}
         docker build -t sampleapp:latest .        
         docker tag sampleapp:latest 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:$TAG
@@ -53,10 +55,7 @@ jobs:
     - name: Inject tag into deployment manifest
       run: echo "Value of TAG:$TAG"
       
-    - name: Inject tag into deployment manifest
-      run: sed -i "s#\${TAG}#$TAG#g" deployment.yaml
-    - name: check file
-      run: cat deployment.yaml
+
  
       #sed -i "s/\${TAG}/$(echo ${{ steps.get_tag.outputs.tag }})/g" deployment.yaml
 
