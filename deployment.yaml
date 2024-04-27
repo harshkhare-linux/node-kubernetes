@@ -16,6 +16,13 @@ spec:
       - name: nodejs-sample-image
         image: 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:${TAG}
         imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "100m"   # Specify CPU request (100 milliCPU)
+            memory: "128Mi"   # Specify memory request (128 Megabytes)
+          limits:
+            cpu: "200m"   # Optionally specify CPU limit
+            memory: "256Mi"   # Optionally specify memory limit
         env:
         - name: IMAGE_TAG
           valueFrom:
