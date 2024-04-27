@@ -48,12 +48,20 @@ jobs:
         echo Update Kube Config
         aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
         #kubectl delete configmap image-tag-config
-      
+        
+    - name: Debug tag value before substitution
+      run: echo "Tag value before substitution: ${{ steps.get_tag.outputs.tag }}"
+
+    - name: Inject tag into deployment manifest
+      run: sed -i "s/\${TAG}/$(echo ${{ steps.get_tag.outputs.tag }})/g" deployment.yaml
+
+    - name: Debug deployment file after substitution
+      run: cat deployment.yaml
+
 
     - name: Apply changes to Kubernetes manifests
       run: |
         echo Apply changes to kube manifests
-        sed -i "s/\${TAG}/$(echo $TAG)/g" deployment.yaml
         kubectl apply -f deployment.yaml
         echo Completed applying changes to Kubernetes Objects
 
