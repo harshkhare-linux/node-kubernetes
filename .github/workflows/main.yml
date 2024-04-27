@@ -32,7 +32,7 @@ jobs:
         echo $TAG
         echo ${{ secrets.CONTAINER_NAME }}
         docker build -t sampleapp:latest .        
-        docker tag sampleapp:latest 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:$TAG
+        docker tag sampleapp:latest 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:latest
         docker push 851725513395.dkr.ecr.us-east-1.amazonaws.com/rest-api:latest
 
 
